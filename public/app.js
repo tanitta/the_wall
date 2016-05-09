@@ -4,14 +4,12 @@ window.onload = function(){
 
 function theWall(){
 	io = new RocketIO().connect();
-
-	// document.addEventListener('mousedown', init);
 	var is_down = false;
 	var pos_x = 0;
 	var pos_y = 0;
 	var canvas;
 	var context;
-	// window.addEventListener('load', init);
+	
 	init();
 	function init(){
 		canvas = document.getElementById("canvas1");
@@ -22,33 +20,18 @@ function theWall(){
 		var img = new Image();
 		img.src = "test.png";
 		img.onload = function() {
-			// context.drawImage(img, 0, 0);
 			console.log("init...");
 			io.push("init", "");
 			console.log("image loaded");
 		}
 	}
 
-	// onload = function(){
-	// 	init();
-	// }
-	document.addEventListener('mousedown', down);
-	document.addEventListener('mousemove', move);
-	document.addEventListener('mouseup', up);
-
-	// onload = function(){
-	// 	var img = new Image();
-	// 	img.src = "test.png";
-	// 	img.onload = function() {
-	// 		// context.drawImage(img, 0, 0);
-	// 		console.log("init...");
-	// 		io.push("init", "");
-	// 		console.log("image loaded");
-	// 	}
-	// }
+	canvas.addEventListener('mousedown', down);
 	function down(){
 		is_down = true;
 	}
+	
+	canvas.addEventListener('mousemove', move);
 	function move(e) {
 		var canvasRect = canvas.getBoundingClientRect();
 		if(is_down){
@@ -58,11 +41,11 @@ function theWall(){
 		pos_y = e.clientY-canvasRect.top;
 
 	}
+	
+	canvas.addEventListener('mouseup', up);
 	function up(){
 		is_down = false;
 	}
-
-
 
 	function draw(x1,y1,x2,y2,width,color){
 		context.lineWidth = width;
@@ -95,6 +78,5 @@ function theWall(){
 			context.drawImage(requested_img, 0, 0);
 		}
 	});
-
 }
 
